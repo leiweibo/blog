@@ -8,9 +8,24 @@ from datetime import datetime
 
 from forms.BasicForm import NameForm
 
+from flask.ext.sqlalchemy import SQLAlchemy
+
+from shared import db
+from models.models import User, Role
+
 template_path = os.path.abspath('./templates')
 app = Flask(__name__, template_folder=template_path)
 app.config['SECRET_KEY'] = 'hard to guess string' ###TODO
+#####db configuration
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///' + os.path.join(basedir, 'data.sqlite')
+app.config['SQLCHEMY_COMMIT_ON_TEARDOWN'] = True
+db.init_app(app)
+# refer here
+# http://stackoverflow.com/questions/19437883/when-scattering-flask-models-runtimeerror-application-not-registered-on-db-w
+# with app.app_context():
+#     db.create_all()
+
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
@@ -26,13 +41,22 @@ def internal_server_error(e):
 def index():
     form = NameForm()
     if form.validate_on_submit():
-        old_name = session.get('name')
-        print('the old_name:' + old_name)
-        if old_name is not None and old_name != form.name.data:
-            flash('Looks like you have changed your name!')
-        session['name'] = form.name.data
+        uName = form.name.data
+        print('the user name posted is:' + uName)
+        user = User.query.filter_by(username=uName).first()
+        if user is None:
+            user = User(username = uName)
+            db.session.add(user)
+            db.session.commit()
+            print('db saved.......')
+            session['known'] = False
+        else:
+            print('user exists.......')
+            session['known'] = True
+        
+        form.name.data = ''
         return redirect(url_for('index'))
-    return render_template('index.html', form=form, name=session.get('name'))
+    return render_template('index.html', form=form, known=session.get('known', False))
 
 @app.route('/user/<name>')
 def user(name):
@@ -40,3 +64,4 @@ def user(name):
 
 if __name__ == '__main__':
     app.run(debug=True)
+

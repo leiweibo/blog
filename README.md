@@ -6,6 +6,7 @@ It's was developed base on what I read from the book [Oreilly.Flask.Web.Developm
 * pip install flask-bootstrap
 * pip install flask-moment
 * pip install flask-wtf
+* pip install flask-sqlalchemy
 
 #####Notes:
 * in Ch04, the ```validators=[Required()``` will cause an Exception as following:
