@@ -14,5 +14,10 @@ It's was developed base on what I read from the book [Oreilly.Flask.Web.Developm
 the solution is:
 change the Required in the form class to `Required()`
 
+###### About db 
+1. run ```python3 manage.py db init``` to generate migrations folder to use db migration.
+2. run ```python3 manage.py db migrate -m "init migration"``` will generate generate the sqlite file.
+3. update the model class and run ```python3 manage.py db upgrade``` will upgrade the db.
+
 [1]:http://shop.oreilly.com/product/0636920031116.do
 [excep1]: exception1.png
