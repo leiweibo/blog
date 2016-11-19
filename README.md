@@ -8,6 +8,7 @@ It's was developed base on what I read from the book [Oreilly.Flask.Web.Developm
 * pip install flask-wtf
 * pip install flask-sqlalchemy
 * pip install flask-mail
+* pip install Werkzeug
 #####Notes:
 * in Ch04, the ```validators=[Required()``` will cause an Exception as following:
 ![Exception][excep1]
