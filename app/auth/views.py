@@ -41,7 +41,7 @@ def confirm(token):
         flash('You have confirmed your account. Thanks!')
     else:
         flash('The confirmation link is invalid or has expired.')
-    return redirect(url_for('main.index'))            
+    return redirect(url_for('main.index'))
 
 @auth.route('/logout')
 @login_required
@@ -52,7 +52,7 @@ def logout():
 # @auth.route('/secret')
 # @login_required
 # def secret():
-#     return 'Only authenticated users are allowed!'  
+#     return 'Only authenticated users are allowed!
 
 @auth.before_app_request
 def before_request():
