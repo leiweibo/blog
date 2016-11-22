@@ -26,15 +26,23 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
-                <li>
-                    <a href="{{url_for('auth.logout')}}">Sign Out</a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                          <a href="{{url_for('auth.change_password')}}">Change Password</a>
+                        </li>
+                        <li>
+                          <a href="{{url_for('auth.logout')}}">Sign Out</a>
+                        </li>
+                    </ul>
                 </li>
                 {% else %}
                 <li>
                     <a href="{{url_for('auth.login')}}">Login</a>
-                </li>                    
+                </li>
                 {% endif %}
-            </ul>                
+            </ul>
         </div>
     </div>
 </div>

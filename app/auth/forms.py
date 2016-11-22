@@ -26,4 +26,10 @@ class RegisterForm(Form):
 
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
-            raise ValidationError('Username already in user.')                
+            raise ValidationError('Username already in user.')
+
+class ChangePasswordForm(Form):
+    password = PasswordField('Original Password', validators=[Required()])
+    newPassword = PasswordField('New Password', validators=[Required(), EqualTo('newPassword2', message='Passwords must match.')])
+    newPassword2 = PasswordField('Confirm New Password', validators=[Required()])
+    submit = SubmitField('Reset Password')
