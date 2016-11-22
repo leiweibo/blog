@@ -32,4 +32,4 @@ class ChangePasswordForm(Form):
     password = PasswordField('Original Password', validators=[Required()])
     newPassword = PasswordField('New Password', validators=[Required(), EqualTo('newPassword2', message='Passwords must match.')])
     newPassword2 = PasswordField('Confirm New Password', validators=[Required()])
-    submit = SubmitField('Reset Password')
+    submit = SubmitField('Change Password')
