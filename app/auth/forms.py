@@ -39,7 +39,6 @@ class PasswordResetRequestForm(Form):
     submit = SubmitField('Submit')
 
 class PasswordResetForm(Form):
-    email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
     newPassword = PasswordField('New Password', validators=[Required(), EqualTo('newPassword2', message='Passwords must match.')])
     newPassword2 = PasswordField('Confirm New Password', validators=[Required()])
     submit = SubmitField('Submit')

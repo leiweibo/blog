@@ -1,10 +1,12 @@
 from flask import render_template, redirect, request, url_for, flash
 from . import auth
 from .forms import LoginForm, RegisterForm, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from ..models import User
 from flask_login import login_user, logout_user, login_required, current_user
 from .. import db
 from ..email import send_email
+from flask import current_app
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login(): 
@@ -119,7 +121,12 @@ def password_reset(token):
         return redirect(url_for('main.index'))
     form = PasswordResetForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        s = Serializer(current_app.config['SECRET_KEY']) 
+        try:
+            data = s.loads(token)
+        except:
+            return redirect(url_for('main.index'))
+        user = User.query.filter_by(email=data.get('email')).first()
         if user is None:
             return redirect(url_for('main.index'))
         if user.reset_password(token, form.newPassword.data):
