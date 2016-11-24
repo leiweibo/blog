@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request, url_for, flash
 from . import auth
-from .forms import LoginForm, RegisterForm, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm
+from .forms import LoginForm, RegisterForm, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm, ChangeEmailRequestForm
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from ..models import User
 from flask_login import login_user, logout_user, login_required, current_user
@@ -137,5 +137,29 @@ def password_reset(token):
             return redirect(url_for('main.index'))
     return render_template('auth/reset_password.html', form=form)
 
+@auth.route('/change_email', methods=['GET', 'POST'])
+@login_required
+def change_email_request():
+    form = ChangeEmailRequestForm()
+    if form.validate_on_submit():
+        newEmail = form.email.data
+        user = User.query.filter_by(email=newEmail).first()
+        if not user is None:
+            flash('The email has been used by other users.')
+            return redirect(url_for('auth.change_email_request'))
+        token = current_user.generate_change_email_token(new_email = newEmail)
+        send_email(newEmail,'Change Your Email', 'auth/email/change_email', user=current_user, token=token)
+        flash('An email with instructions to change your email has been sent to you.') 
+        return redirect(url_for('main.index'))
+    return render_template('auth/change_email.html', form =form)
 
+@auth.route('/change_email/<token>')
+@login_required
+def change_email(token):
+    user = current_user
+    if user.change_email(token):
+        flash('You email have been changed.')
+    else:
+        flash('email change failed.')
+    return redirect(url_for('main.index'))
 

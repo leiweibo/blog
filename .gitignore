@@ -90,3 +90,5 @@ ENV/
 
 migrations/
 *.sqlite
+
+*.DS_Store

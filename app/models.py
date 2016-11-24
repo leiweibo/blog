@@ -55,6 +55,10 @@ class User(UserMixin, db.Model):
         s = Serializer(current_app.config['SECRET_KEY'], expiration)    
         return s.dumps({'reset':self.id, 'email':self.email});
 
+    def generate_change_email_token(self, new_email, expiration = 3600):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'change_email':self.id, 'new_email': new_email})
+
     def confirm(self, token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
@@ -82,7 +86,20 @@ class User(UserMixin, db.Model):
         db.session.commit()
         return True
 
-        
+    def change_email(self, token):
+        s = Serializer(current_app.config['SECRET_KEY'])    
+        try:
+            data = s.loads(token)
+        except:
+            return False
+
+        uid = data.get('change_email')
+        if uid != self.id:
+            return False
+        self.email = data.get('new_email')
+        db.session.add(self)
+        db.session.commit()
+        return True
 
     def __repr__(self):
         return '<User %r>' % self.username
