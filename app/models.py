@@ -1,6 +1,6 @@
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin, current_user
+from flask_login import UserMixin, current_user, AnonymousUserMixin
 from . import login_manager
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
@@ -15,6 +15,14 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     confirmed = db.Column(db.Boolean, default=False)
 
+    def __init__(self, **kwargs):
+        super(User, self).__init__(**kwargs)
+        if self.role is None:
+            if self.email == current_app.config['FLASKY_ADMIN']:
+                self.role = Role.query.filter_by(permissions=0xff).first()
+            if self.role is None:
+                self.role = Role.query.filter_by(default=True).first()
+    
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
@@ -84,8 +92,24 @@ class User(UserMixin, db.Model):
         db.session.commit()
         return True
 
+    def can(self, permissions):
+        # print('abc')
+        return self.role is not None and (self.role.permissions & permissions) == permissions
+
+    def is_aministrator(self):
+        return self.can(Permission.ADMINISTER)
+
     def __repr__(self):
         return '<User %r>' % self.username
+
+class AnonymousUser(AnonymousUserMixin):
+    def can(self, permissions):
+        return False
+
+    def is_administrator(self):
+        return False
+
+login_manager.anonymous_user = AnonymousUser        
 
 class Role(db.Model):
     __tablename__ ='roles'
