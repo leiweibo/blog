@@ -17,4 +17,9 @@ From <a href="http://maps.google.com/?q={{ user.location }}"> {{ user.location }
         Member since {{ moment(user.member_since).format('L') }}.
         Last seen {{ moment(user.last_seen).fromNow() }}.
 </p> </div>
+
+{% if user == current_user %}
+  <a class="btn btn-default" href="{{ url_for('user.edit_profile') }}"> Edit Profile
+  </a>
+{% endif %}
 {% endblock %}
