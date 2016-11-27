@@ -1,14 +1,14 @@
 from flask import render_template, session, redirect, url_for, current_app
 from .. import db
-from ..models import User
+from ..models import User, Permission
 from ..email import send_email
 from . import main
-from .forms import NameForm
+from .forms import PostForm
 
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    form = NameForm()
+    form = PostForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.name.data).first()
         if user is None:
