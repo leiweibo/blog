@@ -1,7 +1,7 @@
 from . import user
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
-from ..models import User
+from ..models import User, Post
 from .. import db
 from .forms import EditorProfileForm
 
@@ -29,5 +29,6 @@ def user(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
         abort(404)
-    return render_template('user/user.html', user=user)
+    posts = user.posts.order_by(Post.timestamp.desc()).all()
+    return render_template('user/user.html', user=user, posts = posts)
 
