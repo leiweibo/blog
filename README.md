@@ -11,6 +11,7 @@ It's was developed base on what I read from the book [Oreilly.Flask.Web.Developm
 * pip install Werkzeug
 * pip install flask-login
 * pip install forgerypy
+* pip install flask-pagedown markdown bleach
 #####Notes:
 * in Ch04, the ```validators=[Required()``` will cause an Exception as following:
 ![Exception][excep1]
