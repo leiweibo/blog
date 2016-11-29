@@ -1,4 +1,4 @@
-from flask import render_template, session, redirect, url_for, current_app, request
+from flask import render_template, session, redirect, url_for, current_app, request, flash
 from flask_login import current_user
 from .. import db
 from ..models import Post, Permission
@@ -27,3 +27,18 @@ def index():
 def post(id):
     post = Post.query.get_or_404(id)
     return render_template('post.html', posts=[post])
+
+@main.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    post = Post.query.get_or_404(id)
+    if current_user != post.author and not current_user.can(Permission.ADMINISTER):
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.body = form.body.data 
+        db.session.add(post)
+        db.session.commit()
+        flash('The post has been updated.')
+        return redirect(url_for('.post', id=post.id))
+    form.body.data = post.body
+    return render_template('edit_post.html', form=form)
