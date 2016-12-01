@@ -9,7 +9,13 @@ import hashlib
 from markdown import markdown 
 import bleach
 
-
+class Follow(db.Model):
+    __tablename__ = 'follows'
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+                            primary_key=True)
+    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+                            primary_key=True)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -35,7 +41,7 @@ class User(UserMixin, db.Model):
         foreign_keys=[Follow.followed_id],
         backref=db.backref('followed', lazy='joined'),
         lazy='dynamic',
-        cascade='all, delete-orphan'))
+        cascade='all, delete-orphan')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -192,15 +198,7 @@ class AnonymousUser(AnonymousUserMixin):
     def is_administrator(self):
         return False
 
-login_manager.anonymous_user = AnonymousUser        
-
-class Follow(db.Model)
-    __tablename__ = 'follows'
-    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'),
-                            primary_key=True)
-    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'),
-                            primary_key=True)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+login_manager.anonymous_user = AnonymousUser
 
 class Role(db.Model):
     __tablename__ ='roles'
