@@ -41,10 +41,10 @@
 
         <p>
             {% if user == current_user %}
-            <a class="btn btn-default" href="{{ url_for('.edit_profile') }}">Edit Profile</a>
+            <a class="btn btn-default" href="{{ url_for('user.edit_profile') }}">Edit Profile</a>
             {% endif %}
-            {% if current_user.is_administrator %}
-            <a class="btn btn-danger" href="{{ url_for('.edit_profile_admin', id=user.id) }}">Edit Profile [Admin]</a>
+            {% if current_user.is_administrator()%}
+            <a class="btn btn-danger" href="{{ url_for('user.edit_profile', id=user.id) }}">Edit Profile bbbbb [Admin]</a>
             {% endif %}
         </p>
 

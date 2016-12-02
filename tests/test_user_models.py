@@ -31,3 +31,4 @@ class UserModelTestCase(unittest.TestCase):
         u = AnonymousUser()
         self.assertFalse(u.can(Permission.FOLLOW))
                     
+    
