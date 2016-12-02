@@ -1,5 +1,5 @@
 from . import user
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request, current_app
 from flask_login import login_required, current_user
 from ..models import User, Post, Permission
 from ..decorators import permission_required
@@ -51,15 +51,27 @@ def unfollow(username):
     flash('You are now not following %s.' % username)
     return redirect(url_for('.user', username=username))
 
-#todo
 @user.route('/followers/<username>')
 def followers(username):
-    return render_template('user/user.html', user=user, posts = posts)
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('Invalid User.')
+        return redirect(url_for('.index'))
+    page = request.args.get('page', 1, type=int)
+    pagination = user.followers.paginate(
+        page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
+        error_out=False)
+    follows = [{'user': item.follower, 'timestamp': item.timestamp}
+        for item in pagination.items]
+
+    return render_template('followers.html', user=user, title="Followers of",
+                           endpoint='.followers', pagination=pagination,
+                           follows=follows)
 
 #todo
 @user.route('/followed_by/<username>')
 def followed_by(username):
-    return render_template('user/user.html', user=user, posts = posts)
+    return render_template('user/user.html', user=user, posts=posts)
 
 @user.route('/user/<username>')
 def user(username):
