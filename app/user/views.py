@@ -2,6 +2,7 @@ from . import user
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from ..models import User, Post, Permission
+from ..decorators import permission_required
 from .. import db
 from .forms import EditorProfileForm
 
@@ -22,13 +23,32 @@ def edit_profile():
     form.location.data = current_user.location
     form.about_me.data = current_user.about_me ##temp typo abount_me
     return render_template('user/edit_profile.html', form = form)
+
 #todo
 @user.route('/follow/<username>')
+@login_required
+@permission_required(Permission.FOLLOW)
 def follow(username):
+    u = User.query.filter_by(username=username).first();
+    if u is None:
+        flash('Invalid User')
+        return redirect(url_for('main.index'))
+    if current_user.is_following(u):
+        flash('You are already following this user.')
+        return redirect('.user', username=username)
+    current_user.follow(u)
+    flash('You are now following %s.' % username)
     return redirect(url_for('.user', username=username))
-#todo
+
+
 @user.route('/unfollow/<username>')
 def unfollow(username):
+    u = User.query.filter_by(username=username).first();
+    if u is None:
+        flash('Invalid User')
+        return redirect(url_for('main.index'))
+    current_user.unfollow(u) 
+    flash('You are now not following %s.' % username)
     return redirect(url_for('.user', username=username))
 
 #todo
@@ -48,39 +68,4 @@ def user(username):
         abort(404)
     posts = user.posts.order_by(Post.timestamp.desc()).all()
     return render_template('user/user.html', user=user, posts = posts)
-
-
-
-
-# @user.route('/follow/<username>')
-# @login_required
-# @permission_required(Permission.FOLLOW)
-# def follow(username):
-#     user = User.query.filter_by(username=username).first()
-#     if user is None:
-#         flash('Invalid user.')
-#         return redirect(url_for('.index'))
-#     if current_user.is_following(user):
-#         flash('You are already following this user.')
-#         return redirect(url_for('.user', username=username))
-#     current_user.follow(user)
-#     flash('You are now following %s.' % username)
-#     return redirect(url_for('.user', username=username))
-
-
-# #todo read the method.
-# @user.route('/unfollow/<username>')
-# @login_required
-# @permission_required(Permission.FOLLOW)
-# def unfollow(username):
-#     user = User.query.filter_by(username=username).first()
-#     if user is None:
-#         flash('Invalid user.')
-#         return redirect(url_for('.index'))
-#     if not current_user.is_following(user):
-#         flash('You are not following this user.')
-#         return redirect(url_for('.user', username=username))
-#     current_user.unfollow(user)
-#     flash('You are not following %s anymore.' % username)
-#     return redirect(url_for('.user', username=username))
 
