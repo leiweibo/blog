@@ -1,10 +1,10 @@
 from flask import render_template, session, redirect, url_for, current_app, request, flash, make_response
 from flask_login import current_user, login_required
 from .. import db
-from ..models import Post, Permission
+from ..models import Post, Permission, Comment
 from ..email import send_email
 from . import main
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 
 
 @main.route('/', methods=['GET', 'POST'])
@@ -49,10 +49,21 @@ def show_followed():
     return resp
 
 
-@main.route('/post/<int:id>')
+@main.route('/post/<int:id>', methods=['Get', 'Post'])
 def post(id):
     post = Post.query.get_or_404(id)
-    return render_template('post.html', posts=[post])
+    form = CommonetForm()
+    if form.validate_on_submit():
+        comment = Comment(body=form.body.data, post = posts, author = current_user._get_current_object())
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(url_for('.post', id=post.id, page=-1))
+    if page == -1:
+        page = (post.comments.count() -1) / current_app.config['FLASKY_COMMENTS_PER_PAGE']
+    pagination = post.comments.order_by(Comment.timestamp.asc()).pagination(
+        page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'], error_out=False)
+    comments = pagination.items
+    return render_template('post.html', posts=[post], form=form, comments = commnets, pagination = pagination)
 
 @main.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
