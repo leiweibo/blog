@@ -7,27 +7,27 @@ It's developed base on the book [Oreilly.Flask.Web.Development][1]
 
 ##### 1. Install the extensions via `pip`
 
-* pip install flask-bootstrap
-* pip install flask-moment
-* pip install flask-wtf
-* pip install flask-sqlalchemy
-* pip install flask-mail
-* pip install Werkzeug
-* pip install flask-login
-* pip install forgerypy
-* pip install flask-script
-* pip install flask-pagedown markdown bleach
+	* pip install flask-bootstrap
+	* pip install flask-moment
+	* pip install flask-wtf
+	* pip install flask-sqlalchemy
+	* pip install flask-mail
+	* pip install Werkzeug
+	* pip install flask-login
+	* pip install forgerypy
+	* pip install flask-script
+	* pip install flask-pagedown markdown bleach
 
 ##### 2. Config enviroment
-  Configure the `MAIL_USERNAME` and `MAIL_PASSWORD` in your enviroment which used to as host email.
+  	Configure the `MAIL_USERNAME` and `MAIL_PASSWORD` in your enviroment which used to as host email.
 
 ##### 3. init database
-python3 manage.py db init
+	python3 manage.py db init
 
 ##### 4. Start the server
-python3 manage.py runserver -h 0.0.0.0
+	python3 manage.py runserver -h 0.0.0.0
 
-`-h 0.0.0.0` can make your website request via ip address.
+	`-h 0.0.0.0` can make your website request via ip address.
 
 
 #####Notes:
