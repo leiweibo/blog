@@ -204,7 +204,9 @@ class User(UserMixin, db.Model):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
             data = s.loads(token)
-
+        except:
+            return None
+        return User.query.get(data['id'])
 
     def __repr__(self):
         return '<User %r>' % self.username
