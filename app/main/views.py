@@ -1,4 +1,4 @@
-from flask import render_template, session, redirect, url_for, current_app, request, flash, make_response
+from flask import render_template, session, redirect, url_for, current_app, request, flash, make_response, abort
 from flask_login import current_user, login_required
 from .. import db
 from ..models import Post, Permission, Comment
