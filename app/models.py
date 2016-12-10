@@ -195,6 +195,17 @@ class User(UserMixin, db.Model):
         return self.followers.filter_by( 
             follower_id=user.id).first() is not None
 
+    def generate_auth_token(self, expiration):
+        s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
+        return s.dumps({'id': slef.id})
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+
+
     def __repr__(self):
         return '<User %r>' % self.username
 
