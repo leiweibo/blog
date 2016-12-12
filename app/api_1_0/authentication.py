@@ -32,6 +32,7 @@ def before_request():
   if not g.current_user.is_anonymous and not g.current_user.confirmed:
     return forbidden('Uncofirmed account')
 
+#encoded = base64.b64encode(b'leiweibo@gmail.com:xxxx')
 @api.route('/token')
 def get_token():
     if g.current_user.is_anonymous or g.token_used: 

@@ -5,6 +5,7 @@ It's developed base on the book [Oreilly.Flask.Web.Development][1]
 
 ######TODO
     Look more detail about HttpAuth(flask-httpauth) in Flask.
+    http://www.bjhee.com/flask-ext9.html
 
 #####Steps:
 
