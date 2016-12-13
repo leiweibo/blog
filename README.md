@@ -51,9 +51,9 @@ change the Required in the form class to `Required()`
 
 #####API accessing:
 
-    curl -i -X GET -H "Content-Type: application/json" -H "Authorization: Basic bGVpd2VpYm9AZ21haWwuY29tOjEyMzEyM2xlaQ== " http://localhost:5000/api/v1.0/token
+    curl -i -X GET -H "Content-Type: application/json" -H "Authorization: Basic bGVpd2VpYm9AZ21haWwuY29tOjEyMzEyM2xlaQ==" http://localhost:5000/api/v1.0/token
 
-		curl -u -i -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsImlhdCI6MTQ4MTY0NDE2NSwiZXhwIjoxNDgxNjQ3NzY1fQ.eyJpZCI6Mn0.X8fTVQro8hhsT27zky_JjSlbEux2z6nyugq2QDkPNs8" -d '{"body":"This is the comment from rest-api"}' http://localhost:5000/api/v1.0/posts/1/comments/
+		curl -i -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJleHAiOjE0ODE2NTA4MTYsImlhdCI6MTQ4MTY0NzIxNiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6Mn0.S97_YMhw2D_aQvZodNqfD3ZP3gzpg48wO15WGACQX9o" -d '{"body":"This is the comment from rest-api"}' http://localhost:5000/api/v1.0/posts/1/comments/
 
 
 

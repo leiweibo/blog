@@ -33,6 +33,7 @@ class User(UserMixin, db.Model):
     avatar_hash = db.Column(db.String(32))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
+    token = db.Column(db.String(128))
     followed = db.relationship('Follow', 
         foreign_keys=[Follow.follower_id], 
         backref=db.backref('follower', lazy='joined'),

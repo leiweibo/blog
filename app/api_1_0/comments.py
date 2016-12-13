@@ -2,7 +2,10 @@ from flask import jsonify, request, g, url_for, current_app
 from .. import db
 from . import api
 from ..models import Post, Permission, Comment
+from flask_httpauth import HTTPTokenAuth
 from .decorators import permission_required
+
+tokenAuth = HTTPTokenAuth(scheme='Bearer')
 
 @api.route('/comments/')
 def get_comments():
@@ -56,6 +59,7 @@ def get_post_comments(id):
     })
 
 @api.route('/posts/<int:id>/comments/', methods=['POST'])
+@tokenAuth.login_required #token auth's login_required will redirect the request to verify_token
 @permission_required(Permission.COMMENT)
 def new_post_comment(id):
     post = Post.query.get_or_404(id)
