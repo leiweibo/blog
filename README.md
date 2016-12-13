@@ -3,10 +3,10 @@
 It's developed base on the book [Oreilly.Flask.Web.Development][1]
 
 
-######TODO
+####TODO
 * Look more detail about HttpAuth(flask-httpauth) in Flask:
     
-    - http://www.bjhee.com/flask-ext9.html
+  - http://www.bjhee.com/flask-ext9.html
      
   - http://cxymrzero.github.io/blog/2015/03/18/flask-token/
     
@@ -14,7 +14,7 @@ It's developed base on the book [Oreilly.Flask.Web.Development][1]
     
 * <del>Add a token field in table users, and check the token when a receive a request.</del>
 
-#####Steps:
+####Steps:
 
 ##### 1. Install the extensions via `pip`
 
@@ -56,7 +56,7 @@ change the Required in the form class to `Required()`
 
     curl -i -X GET -H "Content-Type: application/json" -H "Authorization: Basic bGVpd2VpYm9AZ21haWwuY29tOjEyMzEyM2xlaQ==" http://localhost:5000/api/v1.0/token
 
-  curl -i -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJpYXQiOjE0ODE2NTAzOTQsImV4cCI6MTQ4MTY1Mzk5NCwiYWxnIjoiSFMyNTYifQ.eyJpZCI6Mn0.l6iQZG-NzN-pBgWSQpuLe66B0IrFXXbAaDnc6ksUQNo" -d '{"body":"This is the comment from rest-api"}' http://localhost:5000/api/v1.0/posts/1/comments/
+    curl -i -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJpYXQiOjE0ODE2NTAzOTQsImV4cCI6MTQ4MTY1Mzk5NCwiYWxnIjoiSFMyNTYifQ.eyJpZCI6Mn0.l6iQZG-NzN-pBgWSQpuLe66B0IrFXXbAaDnc6ksUQNo" -d '{"body":"This is the comment from rest-api"}' http://localhost:5000/api/v1.0/posts/1/comments/
 
 
 
