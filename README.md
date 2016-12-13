@@ -7,6 +7,7 @@ It's developed base on the book [Oreilly.Flask.Web.Development][1]
     * Look more detail about HttpAuth(flask-httpauth) in Flask.
       http://www.bjhee.com/flask-ext9.html
       http://cxymrzero.github.io/blog/2015/03/18/flask-token/
+      http://khalily.github.io/2015/08/24/flask-angular-http-auth/
     * Add a token field in table users, and check the token when a receive a request.
 
 #####Steps:
@@ -50,9 +51,9 @@ change the Required in the form class to `Required()`
 
 #####API accessing:
 
-    curl -u eyJleHAiOjE0ODE0NjkyMTIsImlhdCI6MTQ4MTQ2NTYxMiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6Mn0.7ULasdD93HwcR3PWL6gh7coT7C1t40ykg255Vm9mg_M: -i -X POST -H "Content-Type: application/json" -d '{"body":"This is the comment from rest-api"}' http://localhost:5000/api/v1.0/posts/1/comments/
+    curl -i -X GET -H "Content-Type: application/json" -H "Authorization: Basic bGVpd2VpYm9AZ21haWwuY29tOjEyMzEyM2xlaQ== " http://localhost:5000/api/v1.0/token
 
-		curl -u <your email>:<your password> -i -X POST -H "Content-Type: application/json" -d '{"body":"This is the comment from rest-api"}' http://localhost:5000/api/v1.0/posts/1/comments/
+		curl -u -i -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsImlhdCI6MTQ4MTY0NDE2NSwiZXhwIjoxNDgxNjQ3NzY1fQ.eyJpZCI6Mn0.X8fTVQro8hhsT27zky_JjSlbEux2z6nyugq2QDkPNs8" -d '{"body":"This is the comment from rest-api"}' http://localhost:5000/api/v1.0/posts/1/comments/
 
 
 

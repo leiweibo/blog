@@ -1,12 +1,13 @@
-from flask import g, jsonify
-from flask_httpauth import HTTPBasicAuth
+from flask import g, jsonify, session, request
+from flask_httpauth import HTTPTokenAuth, HTTPBasicAuth
 from ..models import User, AnonymousUser
 from . import api
 from .errors import forbidden, unauthorized
 
-auth = HTTPBasicAuth()
+tokenAuth = HTTPTokenAuth(scheme='Bearer')
+basicAuth = HTTPBasicAuth()
 
-@auth.verify_password
+@basicAuth.verify_password
 def verify_password(email_or_token, password):
   if email_or_token == '':
     g.current_user = AnonymousUser()
@@ -22,18 +23,28 @@ def verify_password(email_or_token, password):
   g.token_used = False
   return user.verify_password(password)
 
-@auth.error_handler
+@tokenAuth.error_handler
+@basicAuth.error_handler
 def auth_error():
   return unauthorized('Invalid credentials')
 
+@tokenAuth.verify_token
+def verify_token(token):
+  g.current_user = None
+  g.current_user = User.verify_auth_token(token)
+  return True
+
 @api.before_request
-@auth.login_required
+@tokenAuth.login_required
 def before_request():
-  if not g.current_user.is_anonymous and not g.current_user.confirmed:
-    return forbidden('Uncofirmed account')
+  print("the endpoint is:" + request.endpoint)
+  if 'logged_in' not in session and request.endpoint != 'api.get_token':
+    if not g.current_user.is_anonymous and not g.current_user.confirmed:
+      return forbidden('Uncofirmed account')
 
 #encoded = base64.b64encode(b'leiweibo@gmail.com:xxxx')
 @api.route('/token')
+@basicAuth.login_required
 def get_token():
     if g.current_user.is_anonymous or g.token_used: 
       return unauthorized('Invalid credentials')
