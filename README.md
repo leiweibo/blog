@@ -4,8 +4,10 @@ It's developed base on the book [Oreilly.Flask.Web.Development][1]
 
 
 ######TODO
-    Look more detail about HttpAuth(flask-httpauth) in Flask.
-    http://www.bjhee.com/flask-ext9.html
+    * Look more detail about HttpAuth(flask-httpauth) in Flask.
+      http://www.bjhee.com/flask-ext9.html
+      http://cxymrzero.github.io/blog/2015/03/18/flask-token/
+    * Add a token field in table users, and check the token when a receive a request.
 
 #####Steps:
 
