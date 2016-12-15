@@ -55,9 +55,9 @@ change the Required in the form class to `Required()`
 
 #####About API request from terminal:
 
-    curl -i -X GET -H "Content-Type: application/json" -H "Authorization: Basic bGVpd2VpYm9AZ21haWwuY29tOjEyMzEyM2xlaQ==" http://localhost:5000/api/v1.0/token
+    curl -i -X GET -H accept:application/json "Content-Type: application/json" -H "Authorization: Basic bGVpd2VpYm9AZ21haWwuY29tOjEyMzEyM2xlaQ==" http://localhost:5000/api/v1.0/token
 
-    curl -i -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJpYXQiOjE0ODE2NTAzOTQsImV4cCI6MTQ4MTY1Mzk5NCwiYWxnIjoiSFMyNTYifQ.eyJpZCI6Mn0.l6iQZG-NzN-pBgWSQpuLe66B0IrFXXbAaDnc6ksUQNo" -d '{"body":"This is the comment from rest-api"}' http://localhost:5000/api/v1.0/posts/1/comments/
+    curl -i -X POST -H accept:application/json "Content-Type: application/json" -H "Authorization: Bearer eyJpYXQiOjE0ODE2NTAzOTQsImV4cCI6MTQ4MTY1Mzk5NCwiYWxnIjoiSFMyNTYifQ.eyJpZCI6Mn0.l6iQZG-NzN-pBgWSQpuLe66B0IrFXXbAaDnc6ksUQNo" -d '{"body":"This is the comment from rest-api"}' http://localhost:5000/api/v1.0/posts/1/comments/
 
 
 
