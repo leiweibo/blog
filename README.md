@@ -29,6 +29,7 @@ It's developed base on the book [Oreilly.Flask.Web.Development][1]
   * pip install flask-script
   * pip install flask-pagedown markdown bleach
   * pip install flask-httpauth
+  * pip install converage
 
 ##### 2. Config enviroment
     Configure the `MAIL_USERNAME` and `MAIL_PASSWORD` in your enviroment which used to as host email.
