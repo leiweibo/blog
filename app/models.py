@@ -209,6 +209,14 @@ class User(UserMixin, db.Model):
             return None
         return User.query.get(data['id'])
 
+    @staticmethod
+    def add_self_follows():
+        for user in User.query.all():
+            if not user.is_following(user):
+                user.follow(user)
+                db.session.add(user)
+                db.session.commit()
+
     def __repr__(self):
         return '<User %r>' % self.username
 
