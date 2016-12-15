@@ -11,8 +11,7 @@ It's developed base on the book [Oreilly.Flask.Web.Development][1]
   - http://cxymrzero.github.io/blog/2015/03/18/flask-token/
     
   - http://khalily.github.io/2015/08/24/flask-angular-http-auth/
-    
-* <del>Add a token field in table users, and check the token when a receive a request.</del>
+
 
 ####Steps:
 
@@ -42,6 +41,10 @@ It's developed base on the book [Oreilly.Flask.Web.Development][1]
 
   `-h 0.0.0.0` can make your website request via ip address.
 
+#####virtualenv
+* virtualenv -p /usr/bin/python3 python3env
+* active the virtualenv: source python3env/bin/active
+* pip install -r requirements/prod.txt to install the depdencies
 
 #####Notes:
 * in Ch04, the ```validators=[Required()``` will cause an Exception.
