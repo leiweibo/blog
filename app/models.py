@@ -298,6 +298,11 @@ class Permission:
     MODERATE_COMMENTS = 0x08
     ADMINISTER = 0x80  
 
+class Test(db.Model):
+    __tablename__ = 'tests'
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.Text)
+
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key = True)
