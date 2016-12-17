@@ -2,7 +2,7 @@ server {
   listen  80;
   server_name 60.205.203.80;
 
-  location {
+  location / {
     include uwsgi_params;
     uwsgi_pass 127.0.0.1:8001;
     uwsgi_param UWSGI_PYHOME /root/deploy/flsk_blog/blog_python3.4_env;
