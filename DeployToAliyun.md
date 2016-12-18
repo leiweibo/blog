@@ -21,7 +21,7 @@
     * Backup the existed default in /etc/nginx/sites-available/default, and create a new default file in the folder, refer to: defualt_nginx
 
   Everything is up, run 
-    ```service supervisor restart```
+    ```service supervisor restart``` ---->You can use supervisorctl to check the status of the supervisor
     ```service nginx restart```
 
   HERE WE GO!!!!
