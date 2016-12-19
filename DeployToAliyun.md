@@ -3,6 +3,7 @@
   * Active the python3env: sorce python3env/bin/active (Just deactivate when you dont want to use the virtualenv)_
   * Install the dependiencies: pip install -r requirements/prod.txt
   * Configure the enviroment variable:
+    - FLASK_CONFIG
     - MAIL_USERNAME
     - MAIL_PASSWORD 
     - FLASKY_ADMIN
