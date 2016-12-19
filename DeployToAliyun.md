@@ -2,11 +2,8 @@
   * Install virtualenv and configure the virtualenv: virtualenv -p <python3 path> python3env
   * Active the python3env: sorce python3env/bin/active (Just deactivate when you dont want to use the virtualenv)_
   * Install the dependiencies: pip install -r requirements/prod.txt
-  * Configure the enviroment variable:
+  * Configure the enviroment variable in:
     - FLASK_CONFIG
-    - MAIL_USERNAME
-    - MAIL_PASSWORD 
-    - FLASKY_ADMIN
 
   * Congure the db: 
     - ```python3 manage.py db init```
@@ -17,6 +14,10 @@
 
   * Install supervisor in ubuntu: sudo apt-get install supervisor
     * Add a new conf in /etc/supervisor/conf.d/ folder: refer to flask_blog_supervisor.conf
+      **And replace the enviroment with your own value**
+        - MAIL_USERNAME
+        - MAIL_PASSWORD 
+        - FLASKY_ADMIN
 
   * Install nginx in ubuntu: apt-get install nginx
     * Backup the existed default in /etc/nginx/sites-available/default, and create a new default file in the folder, refer to: defualt_nginx
